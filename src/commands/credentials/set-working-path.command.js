@@ -4,62 +4,80 @@ const chalk = require('chalk');
 const { CredentialManager } = require('../../credentials');
 const { ConfigManager } = require('../../config');
 const fs = require('fs');
+const Utils = require('../../utils');
 
 /**
  * @description - Sets the working path for the relevant credentials
+ * @param {String=} credential - The name of the credential
  * @param {Object} options - The options object
- * @param {string} options.credential - The name of the credential
- * @param {string} options.path - The path to set as the working path
- * @param {boolean} options.useWorkingDirectory - Whether to use the working directory, if set to true, path is ignored
- */
+ * @param {String} options.path - The path to set as the working path
+ * @param {Boolean} options.useWorkingDirectory - Whether to use the working directory, if set to true, path is ignored
+ * @param {Boolean} options.verbose - Whether to log the output
+ * @returns {Promise<void>}
+*/
 module.exports = async function setWorkingPath(
+    credential,
     options = {
-        credential: undefined,
         path: undefined,
-        useWorkingDirectory: false
+        useWorkingDirectory: false,
+        verbose: true
     }
-) {
+)
+{
     // if not provided, use the active credential
-    const credentialName = options.credential || ConfigManager.config.activeCredential;
+    const credentialName = credential || ConfigManager.config.activeCredential;
 
     // if no credential name is provided, throw an error
-    if (!credentialName) {
+    if (!credentialName)
+    {
         console.error(chalk.red('No credential name provided and no active credential set'));
         return;
     }
 
     // get the credential
-    const credential = CredentialManager.getCredential(credentialName);
+    const credentialToWorkWith = CredentialManager.getCredential(credentialName);
 
     // if the credential doesn't exist, throw an error
-    if (!credential) {
+    if (!credentialToWorkWith)
+    {
         console.error(chalk.red(`Credential ${credentialName} does not exist`));
         return;
     }
 
-    const path = (options.useWorkingDirectory === true && process.cwd()) || options.path;
+    let pathToUse;
 
-    if (!path) {
+    if (options.useWorkingDirectory === true)
+    {
+        pathToUse = process.cwd();
+    }
+    else if (options.path)
+    {
+        pathToUse = Utils.getFilePath(options.path);
+    }
+
+    if (!pathToUse)
+    {
         console.error(chalk.red('No path provided'));
         return;
     }
 
     // validate the path
-    if (!fs.existsSync(path)) {
-        console.error(chalk.red(`Path ${path} does not exist`));
+    if (!fs.existsSync(pathToUse))
+    {
+        console.error(chalk.red(`Path ${pathToUse} does not exist`));
         return;
     }
 
     // set the working path
-    credential.workingDirectory = path;
+    credentialToWorkWith.workingDirectory = pathToUse;
 
     // update the config
-    CredentialManager.updateCredentials(credentialName, credential);
+    CredentialManager.updateCredentials(credentialName, credentialToWorkWith);
 
-    console.log(
+    options.verbose && console.log(
         chalk.green('Working path for'),
         chalk.bold.yellow(credentialName),
         chalk.green('set to'),
-        chalk.bold.yellow(path)
+        chalk.bold.yellow(pathToUse)
     );
 };

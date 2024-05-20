@@ -1,8 +1,8 @@
 {
-  "name": "env-manager",
+  "name": "omg-emg",
   "version": "1.0.0",
   "description": "Cli tool for managing environment variables",
-  "main": "index.js",
+  "main": "cli.js",
   "scripts": {
     "postinstall": "node ./setup/post-install.script.js"
   },
@@ -14,8 +14,8 @@
     "tool",
     "manager"
   ],
-  "author": "Andrey Kurudimov",
-  "private": true,
+  "author": "drekuru",
+  "private": false,
   "bin": {
     "emg": "./cli.js"
   },

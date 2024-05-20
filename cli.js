@@ -13,14 +13,7 @@ const Commands = require('./src/commands');
  * @description These are reusable options to pass in to different programs
  */
 const REUSABLE_OPTIONS = {
-    all: ['-a, --all', 'runs operation on all of the objects/files'],
-    //but: ['-b, --but [filenames]', 'dont use the listed files', Utils.handleCommaSeparateArgs],
-    //force: ['-f, --force', 'dont stop when something fails'],
-    confirm: ['-c, --confirm', 'confirm the action'],
     verbose: ['-v, --verbose', 'print more information'],
-    upto: ['-u, --upto [number]', 'run migrations upto a certain file'],
-    //between: ['-w, --between [range]', 'run migrations on a range', Utils.handleCommaSeparateArgs],
-    extensions: ['-ext, --extensions', 'to include postgis extensions in operation']
 };
 
 const program = new Command();
@@ -35,7 +28,6 @@ program.name('emg').version(pkg.version);
  * emr credentials set <PASSWORD>
  * emr credentials get
  */
-// const cloneCmd = program.command('clone');
 const credentialsCmd = program.command('credentials').aliases(['cred', 'creds', 'c']);
 
 program
@@ -162,13 +154,10 @@ credentialPathCmd
         'Set the working path for the provided credentials - if no credentials are provided, it will use the active credentials'
     )
     .action(Commands.setWorkingPath)
-    .option(
-        '-c --credential [credential]',
-        'The name of the credential - if not provided, it will use the active credential'
-    )
+    .argument('[credential]', 'The name of the credential - if not provided, it will use the active credential')
     .option('-p --path [path]', 'The path to set as the working path')
-    .option('-w --useWorkingDirectory', 'Whether to use the working directory, if set to true, "path" is ignored');
-
+    .option('-w --useWorkingDirectory', 'Whether to use the working directory, if set to true, "path" is ignored')
+    .option(...REUSABLE_OPTIONS.verbose);
 /** ---------------------------------------------------------------------------------------------- */
 // after all commands are added we parse the arguments
 program.parse();

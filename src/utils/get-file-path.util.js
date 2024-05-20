@@ -9,10 +9,12 @@ const path = require('path');
  * @param {String=} pathPrefix
  * @returns {String}
  */
-module.exports = function getFilePath(fileName, pathPrefix) {
+module.exports = function getFilePath(fileName, pathPrefix)
+{
     const isAbsolutePath = path.isAbsolute(fileName);
 
-    if (isAbsolutePath) {
+    if (isAbsolutePath)
+    {
         return fileName;
     }
 
