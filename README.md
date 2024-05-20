@@ -192,3 +192,4 @@ emg edit
 This project is open to contributions. If you have an idea for a feature, or found a bug, please open an issue or a PR.
 
 ## License
+GNU GPLv2

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Cli tool for managing environment variables",
   "main": "cli.js",
+  "license": "GPL-2.0-only",
   "repository": {
     "type": "git",
     "url": "https://github.com/drekuru/env-manager.git"
@@ -21,7 +22,6 @@
     "tool",
     "manager"
   ],
-  "author": "drekuru",
   "private": false,
   "bin": {
     "emg": "./cli.js"
