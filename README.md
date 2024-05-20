@@ -16,6 +16,8 @@ This cli tool provides a way to manage and share environment variables, but real
   - [Managing Context](#managing-context)
   - [Transforming Files](#transforming-files)
   - [Editing the Config Manually](#editing-the-config-manually)
+- [Contributing](#contributing)
+- [License](#license)
 
 <a id="what-it-do"></a>
 ## What it let's you do?
@@ -184,3 +186,9 @@ If you are using VSCode and have the `code .` command setup in your terminal, yo
 ```bash
 emg edit
 ```
+
+
+## Contributing
+This project is open to contributions. If you have an idea for a feature, or found a bug, please open an issue or a PR.
+
+## License

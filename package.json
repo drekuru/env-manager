@@ -3,8 +3,15 @@
   "version": "1.0.0",
   "description": "Cli tool for managing environment variables",
   "main": "cli.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drekuru/env-manager.git"
+  },
   "scripts": {
     "postinstall": "node ./setup/post-install.script.js"
+  },
+  "publishConfig": {
+    "provenance": true
   },
   "keywords": [
     "env",
