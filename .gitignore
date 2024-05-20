@@ -1,0 +1,10 @@
+dist
+secrets
+temp
+node_modules
+*.env
+scripts
+test.js
+test.ts
+.DS_STORE
+envs/*.json
