@@ -49,7 +49,7 @@ module.exports = async function decrypt(
 
     // check if the file exists
     if (!existsSync(pathToFile)) {
-        console.log(chalk.red(`File path ${pathToFile} does not exist`));
+        console.log(chalk.red(`File at path ${pathToFile} does not exist`));
         return;
     }
 

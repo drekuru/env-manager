@@ -1,7 +1,8 @@
 <!-- omit in toc -->
-# Env Manager CLI
+# OMG EMG 
+<span style="color:purple">**O**h **m**y **g**osh! It's an **e**nvironment **m**ana**g**er _CLI_</span>
 
-This cli tool provides a way to manage and share environment variables, but really any sensitive file.
+This cli tool provides a way to manage and share environment variables in the `.env` format, but really it can handle any sensitive data.
 
 <!-- omit in toc -->
 ### Table of Contents
@@ -31,7 +32,7 @@ This cli tool provides a way to manage and share environment variables, but real
 <a id="why-its-made"></a>
 ## Why we built this?
 
-You can skip reading past this to the [Installation](#installation) section if you're not interested in the backstory.
+You can skip past this to the [Installation](#installation) section if you're not interested in the backstory.
 
 > 💸 Cost Effective 💸: If you're working on a small project/team you might not have funding to store/share credentials in some cloud service. So with this tool you can store `.enc` files in your repo and anytime a new member joins, simply share the relevant credentials.
 
@@ -39,10 +40,14 @@ You can skip reading past this to the [Installation](#installation) section if y
 
 > ➡️ Transforming ➡️: If you deploy your app to something like Azure Web Apps, you have to manually copy paste envs. We added transformation to help with converting standard `.env` format into Azure's `appsettings.json` format (and other formats as well). This allows for clean automation with CI/CD pipelines and existing cli tools from Azure. Additionally you can pull down the `appsettings.json` and convert it back to `.env` format and compare and validate it against local files.
 
+> 📝 No OpenSSL 📝: We wanted to make it easier to encrypt/decrypt files and keep it native to NodeJS.
+
+> 🔄 Context Switching 🔄: We wanted to make it easier to switch between different environments and projects. So you can have different credentials for different projects and switch between them easily.
+
 <a id="security"></a>
 ## Security and how it works
 
-When you generate a credential and choose to save it, it gets saved here:
+When you generate a credential and *choose* to save it, it gets saved here:
 
 ```js
 // base path is one of these
@@ -59,16 +64,16 @@ Currently we only support 2 algorithms `aes-256-ecb` and `aes-256-cbc`.
 - `aes-256-ecb` is used if you only want to have a key to encrypt/decrypt files
 - `aes-256-cbc` is used if you want to have an IV and a key to encrypt/decrypt files
 
-We're looking to add more functionality here in the future, like letting the user select the algorithm, etc.
+We're looking to add more functionality here in the future, like letting the user select the algorithm to associate with a credential, etc.
 
 ## Installation
 
 To install the Env Manager CLI, you can use npm:
 
-> ⚠️ **Warning**: This package requires **Node v20+** to run
+> <span style="color:yellow">**⚠️ Warning**:</span> This package requires **Node v20+** to run
 
 ```bash
-npm install -g env-manager
+npm install -g omg-emg
 ```
 
 ## Usage
@@ -123,6 +128,21 @@ emg encrypt ./.env
 ### Managing Context
 
 You can have multiple credentials and switch between them. This is useful when you have different environments like `dev`, `prod`, or even different projects that you want to use this tool in. Additionally you can set the `working directoy` per credential, to keep context of where you are encrypting/decrypting files.
+
+You can set the context with 
+```bash
+emg credentials set <credential>
+```
+and the working directory with
+```bash
+# applies to the active credential
+emg credentials path set -p <path>
+
+# applies to a specific credential
+emg creds path set dev -p ./dev
+```
+
+In-depth example:
 
 1. Generate and save credentials
 
@@ -181,7 +201,7 @@ emg transform ./dev.env -f azure-web-apps
 
 If you are using VSCode and have the `code .` command setup in your terminal, you can peek into and edit the `config.json` file with all of the credentials. This is useful if you want to import a credential from another machine or manually edit the file. (In the future we aim to add a `cred import` command to make this easier)
 
-> ⚠️ **Warning**: Use at your own risk, as this is a raw edit of the file, and can mess up keys, etc.
+> <span style="color:yellow">**⚠️ Warning**:</span> Use at your own risk, as this is a raw edit of the file, and can mess up keys, etc.
 
 ```bash
 emg edit
