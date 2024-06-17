@@ -40,8 +40,6 @@ You can skip past this to the [Installation](#installation) section if you're no
 
 > ➡️ Transforming ➡️: If you deploy your app to something like Azure Web Apps, you have to manually copy paste envs. We added transformation to help with converting standard `.env` format into Azure's `appsettings.json` format (and other formats as well). This allows for clean automation with CI/CD pipelines and existing cli tools from Azure. Additionally you can pull down the `appsettings.json` and convert it back to `.env` format and compare and validate it against local files.
 
-> 📝 No OpenSSL 📝: We wanted to make it easier to encrypt/decrypt files and keep it native to NodeJS.
-
 > 🔄 Context Switching 🔄: We wanted to make it easier to switch between different environments and projects. So you can have different credentials for different projects and switch between them easily.
 
 <a id="security"></a>
